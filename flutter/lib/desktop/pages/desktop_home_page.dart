@@ -846,11 +846,7 @@ void setPasswordDialog() async {
   var errMsg1 = "";
   final RxString rxPass = pw.trim().obs;
   final rules = [
-    DigitValidationRule(),
-    UppercaseValidationRule(),
-    LowercaseValidationRule(),
-    // SpecialCharacterValidationRule(),
-    MinCharactersValidationRule(8),
+    MinCharactersValidationRule(6),
   ];
 
   gFFI.dialogManager.show((setState, close, context) {
