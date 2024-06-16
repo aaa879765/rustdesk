@@ -462,9 +462,11 @@ jobs:
         shell: bash
         run: |
           pushd flutter
-          # flutter build ipa --release --obfuscate --split-debug-info=./split-debug-info --no-codesign
-          # for easy debugging
-          flutter build ipa --release --no-codesign
+          flutter build ios --release
+          pushd build/ios/iphoneos
+          mkdir Payload
+          cp -r Runner.app Payload/
+          zip -q -r Payload.ipa Payload
 
       #- name: Upload Artifacts
       #  # if: env.ANDROID_SIGNING_KEY != null && env.UPLOAD_ARTIFACT == 'true'
@@ -480,7 +482,7 @@ jobs:
           prerelease: true
           tag_name: ${{ env.TAG_NAME }}
           files: |
-            flutter/build/ios/archive/Runner.xcarchive
+            /Users/runner/work/rustdesk/rustdesk/flutter/build/ios/iphoneos/Payload.ipa
 
   build-rustdesk-ios-selfhost:
     #if: ${{ inputs.upload-artifact }}
